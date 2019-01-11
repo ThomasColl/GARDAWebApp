@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='garda.png') }}" type="image/x-icon">
+        <link rel="icon" href="{{ url_for('static', filename='abra.png') }}" type="image/x-icon">
+        <title>{% block title %}{% endblock %} - ABRA</title>
+        <!-- Bootstrap core CSS -->
+        <link href="{{ url_for('static', filename='bootstrap.min.css') }}" type="text/css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="{{ url_for('static', filename='style.css') }}" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <section>
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </section>
+        <!-- Bootstrap core JavaScript -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+        <script src="../../assets/js/vendor/popper.min.js"></script>
+        <script src="../../dist/js/bootstrap.min.js"></script>
+        <script src="../../assets/js/vendor/holder.min.js"></script>
+        <script src="{{ url_for('static', filename='addTheme.js') }}"></script>
+        <footer>
+            {% block footer %}
+            {% endblock %}
+        </footer>
+    </body>
+</html>
