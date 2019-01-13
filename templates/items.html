@@ -8,22 +8,15 @@
   <a class="p-2 text-dark" href="{{ url_for('about') }}">About</a>
 </nav>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Homepage</h2>
+    <h2>Items</h2>
 </div>
 <div class="container">
-  <h3>Welcome</h3>
-    Welcome to GARDA, the app protecting your smarthome.
-    <br><br>
-
-    Select your Options
-
-    <br><br>
-
-  <center>
-    <a href="{{ url_for('items') }}"><img src="static/items.jpg", alt="Items", width="20%", height="20%", style="margin:5%"></a>
-    <a href="{{ url_for('preferences') }}"><img src="static/settings.png", alt="Settings", width="20%", height="20%", style="margin:5%"></a>
-    <a href="{{ url_for('analytics') }}"><img src="static/analytics.jpg", alt="Analytics", width="20%", height="20%", style="margin:5%"></a>
-  </center>
+  The following items are in your smart home network:
+    <center>
+        <!-- TODO Add in JEMMA feature here, communicate with the network and use JEMMA to get back the smart home list -->
+        Amazon Alexa <br>
+        Smart Plug 1 <br>
+    </center>
 </div>
 {% endblock %}
 {% block footer %}
