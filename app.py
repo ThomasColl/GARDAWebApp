@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import json
+
 app = Flask(__name__)
 
 
@@ -13,8 +15,17 @@ def about():
 
 
 @app.route('/items')
-def items():
+def object():
     return render_template('items.html')
+
+
+@app.route('/object', methods=['GET', 'POST'])
+def specificObject():
+    if request.method == 'GET':
+        return "Tut tut tut"
+    elif request.method == 'POST':
+        name = request.form['item']
+    return render_template('objects.html', name=name,)
 
 
 @app.route('/preferences')
@@ -25,3 +36,19 @@ def preferences():
 @app.route('/analytics')
 def analytics():
     return render_template('analytics.html')
+
+
+@app.route('/send', methods=['GET', 'POST'])
+def sendRESTRequest():
+    if request.method == 'GET':
+        return "Tut tut tut"
+    elif request.method == 'POST':
+        name = request.form['item']
+        jsonString = "{"
+        for key, value in request.form.items():
+            jsonString += "\"" + key + "\":\"" + value + "\","
+        jsonString = jsonString[: -1]
+        jsonString += "}"
+
+        return jsonString
+

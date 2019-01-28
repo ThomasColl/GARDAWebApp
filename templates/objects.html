@@ -8,13 +8,13 @@
   <a class="p-2 text-dark" href="{{ url_for('about') }}">About</a>
 </nav>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Items</h2>
+    <h2>{{name}}</h2>
 </div>
 <div class="container">
   The following items are in your smart home network:
     <center>
-        <form action="/object" method="POST">
-        <!-- TODO Add in JEMMA feature here, communicate with the network and use JEMMA to get back the smart home list -->
+        <form action="/send" method="POST">
+        <!-- TODO Add in JEMMA feature here, communicate with the network and use JEMMA to get back the object changes -->
             <input type="radio" name="item" value="Amazon Alexa"> Amazon Alexa <br>
             <input type="radio" name="item" value="Smart Plug 1">Smart Plug 1 <br>
             <input type="submit" value="Select">
