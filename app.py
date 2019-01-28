@@ -22,7 +22,7 @@ def object():
 @app.route('/object', methods=['GET', 'POST'])
 def specificObject():
     if request.method == 'GET':
-        return "Tut tut tut"
+        return "This is an invalid access attempt"
     elif request.method == 'POST':
         name = request.form['item']
     return render_template('objects.html', name=name,)
@@ -41,7 +41,7 @@ def analytics():
 @app.route('/send', methods=['GET', 'POST'])
 def sendRESTRequest():
     if request.method == 'GET':
-        return "Tut tut tut"
+        return "This is an invalid access attempt"
     elif request.method == 'POST':
         name = request.form['item']
         jsonString = "{"
