@@ -64,9 +64,11 @@ def sendRESTPreferencesRequest():
     elif request.method == 'POST':
         jsonString = "{"
         for key, value in request.form.items():
-            jsonString += "\"" + key + "\":\"" + value + "\","
-        jsonString = jsonString[: -1]
-        jsonString += "}"
+            if value:
+                jsonString += "\"" + key + "\":\"" + value + "\","
+        if jsonString is not "{":
+            jsonString = jsonString[: -1]
+            jsonString += "}"
 
         return jsonString
 
