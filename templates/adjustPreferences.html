@@ -20,16 +20,14 @@
                         <option value="Amazon Alexa">Amazon Alexa</option>
                       </select> <br>
         Rest Time: Starts: <select name="restTimeStart">
-                        <option value="00">00</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
+                        {% for x in range(24) %}
+                            <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
                       </select>
                     Ends: <select name="restTimeEnd">
-                        <option value="00">00</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
+                        {% for x in range(24) %}
+                            <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
                         </select>
        <br> <input type="submit" value="Submit">
     </form>
