@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/GARDAWebApp.iml" filepath="$PROJECT_DIR$/.idea/GARDAWebApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GARDAWebapp.iml" filepath="$PROJECT_DIR$/.idea/GARDAWebapp.iml" />
     </modules>
   </component>
 </project>

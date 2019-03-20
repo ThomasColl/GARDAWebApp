@@ -1,8 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import json
+import requests
 
 app = Flask(__name__)
 
+
+base_url = "http://127.0.0.1:5000/"
+item_response = ""
+item = ""
+g = globals()
 
 @app.route('/')
 def index():
@@ -15,22 +21,37 @@ def about():
 
 
 @app.route('/items')
-def object():
-    return render_template('items.html')
+def items():
+    response = requests.get(base_url + "rec")
+    if g["item_response"]:
+        resp = g["item_response"]
+        g["item_response"] = ""
+    else:
+        resp = ""
+    # response = requests.get(base_url + "rec/")
+    raw_items = json.loads(response.text)
+    return render_template('items.html', items=raw_items, response=resp)
 
 
 @app.route('/object', methods=['GET', 'POST'])
-def specificObject():
+def specific_item():
     if request.method == 'GET':
         return "This is an invalid access attempt"
     elif request.method == 'POST':
-        name = request.form['item']
-    return render_template('objects.html', name=name,)
+        g["item"] = request.form['item']
+        response = requests.get(base_url + "recs", data = {'key': g["item"]})
+        raw_items = json.loads(response.text)
+        if raw_items[0] == "Switch":
+            options = ["On", "Off"]
+        else:
+            options = ["On", "Off"]
+    return render_template('objects.html', name=item, options=options)
 
 
 @app.route('/preferences')
 def preferences():
     return render_template('preferences.html')
+
 
 @app.route('/adjustPreferences')
 def adjustPreferences():
@@ -47,18 +68,20 @@ def sendRESTItemsRequest():
     if request.method == 'GET':
         return "This is an invalid access attempt"
     elif request.method == 'POST':
-        name = request.form['item']
-        jsonString = "{"
-        for key, value in request.form.items():
-            jsonString += "\"" + key + "\":\"" + value + "\","
-        jsonString = jsonString[: -1]
-        jsonString += "}"
-
-        return jsonString
+        option = request.form['action']
+        r = requests.post(base_url + 'sec', json={"key": g["item"],
+                                                  "option": option,
+                                                  "subject": "user",
+                                                  "object": "items",
+                                                  "action": "edit"})
+        g["item"] = ""
+        if r.text == "pass":
+            g["item_response"] = "Successful Request"
+        return redirect(url_for("items"))
 
 
 @app.route('/sendPreferences', methods=['GET', 'POST'])
-def sendRESTPreferencesRequest():
+def formJSON():
     if request.method == 'GET':
         return "This is an invalid access attempt"
     elif request.method == 'POST':
@@ -72,3 +95,6 @@ def sendRESTPreferencesRequest():
 
         return jsonString
 
+
+if __name__ == '__main__':
+    app.run()
