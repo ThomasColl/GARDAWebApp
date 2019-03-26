@@ -10,6 +10,7 @@ item_response = ""
 item = ""
 g = globals()
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -28,7 +29,6 @@ def items():
         g["item_response"] = ""
     else:
         resp = ""
-    # response = requests.get(base_url + "rec/")
     raw_items = json.loads(response.text)
     return render_template('items.html', items=raw_items, response=resp)
 
@@ -50,12 +50,20 @@ def specific_item():
 
 @app.route('/preferences')
 def preferences():
-    return render_template('preferences.html')
+    raw = requests.get("http://127.0.0.1:5000/polr").text
+    users = json.loads(raw)
+    return render_template('preferences.html', users=users)
 
 
 @app.route('/adjustPreferences')
-def adjustPreferences():
-    return render_template('adjustPreferences.html')
+def adjust_preferences():
+    # TODO Add in drop down list in html
+    action = request.form["action"]
+    policies = ""
+    if action == "edit" or action == "del":
+        raw = requests.get("http://127.0.0.1:5000/poll").text
+        policies = json.loads(raw)
+    return render_template('adjustPreferences.html', action=action, policy=policies)
 
 
 @app.route('/analytics')
@@ -64,7 +72,7 @@ def analytics():
 
 
 @app.route('/sendItems', methods=['GET', 'POST'])
-def sendRESTItemsRequest():
+def send_rest_items_request():
     if request.method == 'GET':
         return "This is an invalid access attempt"
     elif request.method == 'POST':
@@ -81,19 +89,35 @@ def sendRESTItemsRequest():
 
 
 @app.route('/sendPreferences', methods=['GET', 'POST'])
-def formJSON():
+def form_json():
     if request.method == 'GET':
         return "This is an invalid access attempt"
     elif request.method == 'POST':
-        jsonString = "{"
-        for key, value in request.form.items():
-            if value:
-                jsonString += "\"" + key + "\":\"" + value + "\","
-        if jsonString is not "{":
-            jsonString = jsonString[: -1]
-            jsonString += "}"
+        option = request.form['action']
+        if option == "add":
+            new = request.form["name"] + ", " + request.form["policy"] + ", " + request.form["action"]
+            r = requests.post(base_url + 'sec', json={"subject": "user",
+                                                      "object": "items",
+                                                      "action": "edit",
+                                                      "new": new})
+        elif option == "edit":
+            new = request.form["name"] + ", " + request.form["resource"] + ", " + request.form["action"]
+            old = request.form["policy"]
+            r = requests.post(base_url + 'sec', json={"subject": "user",
+                                                      "object": "items",
+                                                      "action": "edit",
+                                                      "new": new,
+                                                      "old": old})
+        elif option == "del":
+            old = request.form["policy"]
+            r = requests.post(base_url + 'sec', json={"subject": "user",
+                                                      "object": "items",
+                                                      "action": "edit",
+                                                      "old": old})
 
-        return jsonString
+        if r.text == "pass":
+            g["item_response"] = "Successful Request"
+        return redirect(url_for("object"))
 
 
 if __name__ == '__main__':

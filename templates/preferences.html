@@ -11,18 +11,27 @@
     <h2>Change Preferences</h2>
 </div>
 <div class="container">
+    <center>
+        Valid users: <br>
+        {% for user in users %}
+            {{ user }} <br>
+        {% endfor %}
+    </center>
   <!-- TODO: Communicate with the smart home, get the list of preferences and place them in a readable way -->
-    <pre>
-        Your current preferences are:
-            Valid users:
-                Admins
-                Kids
-            Blocked Devices
-                Samsung Smart TV
-            Rest Times
-                10 PM - 6 AM
-    </pre>
-    <a href="{{ url_for('adjustPreferences') }}"><button class="tbutton">Change Preferences</button></a>
+{#        Your current preferences are: <br>#}
+{#            Valid users:#}
+{#                Admins#}
+{#                Kids#}
+{#            Blocked Devices#}
+{#                Samsung Smart TV#}
+{#            Rest Times#}
+{#                10 PM - 6 AM#}
+    <form action="/sendPreferences" method="POST">
+        <input type="radio" name="action" value="add"> Add User <br>
+        <input type="radio" name="action" value="edit"> Edit User <br>
+        <input type="radio" name="action" value="del"> Delete User <br>
+        <input type="submit" value="Change Preferences">
+    </form>
 </div>
 {% endblock %}
 {% block footer %}

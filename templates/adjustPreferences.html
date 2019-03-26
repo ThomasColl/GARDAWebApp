@@ -14,21 +14,64 @@
   <!-- TODO: Communicate with the smart home, get the list of preferences and place them in a readable way -->
     Your current preferences are:
     <form action="/sendPreferences" method="POST">
-        Add New User: <input type="text" name="user"><br>
-        Block Device: <select name="devices">
-                        <option value="Samsung Smart TV">Samsung Smart TV</option>
-                        <option value="Amazon Alexa">Amazon Alexa</option>
-                      </select> <br>
-        Rest Time: Starts: <select name="restTimeStart">
-                        {% for x in range(24) %}
-                            <option value="{{ x }}">{{ x }}</option>
-                        {% endfor %}
-                      </select>
-                    Ends: <select name="restTimeEnd">
-                        {% for x in range(24) %}
-                            <option value="{{ x }}">{{ x }}</option>
-                        {% endfor %}
+        {% if action == "add" %}
+            <input type="hidden" name="action" value="add">
+            Add New User: <br>
+            Username <input type="text" name="name"><br>
+            Resource <select name="policy">
+                        <option value="items"> Devices </option>
+                        <option value="policies"> Policies </option>
+                        <option value="analytics"> Analytics </option>
                         </select>
+            Action <select name="action">
+                        <option value="add"> Add </option>
+                        <option value="edit"> Edit </option>
+                        <option value="del"> Delete </option>
+                    </select>
+        {% elif response != "edit" %}
+            <input type="hidden" name="action" value="edit">
+            Select the policy you want to edit:
+            <select name="policy">
+                {% for p in policy %}
+                    <option value="{{ p }}">  {{ p }} </option>
+                {% endfor %}
+            </select>
+            Edit User: <br>
+            Username <input type="text"  name="name"><br>
+            Resource <select name="resource">
+                        <option value="items"> Devices </option>
+                        <option value="policies"> Policies </option>
+                        <option value="analytics"> Analytics </option>
+                        </select>
+            Action <select name="action">
+                        <option value="add"> Add </option>
+                        <option value="edit"> Edit </option>
+                        <option value="del"> Delete </option>
+                    </select>
+        {% elif response != "del" %}
+            <input type="hidden" name="action" value="edit">
+            Select the policy you want to delete:
+            <select name="policy">
+                {% for p in policy %}
+                    <option value="{{ p }}">  {{ p }} </option>
+                {% endfor %}
+            </select>
+        {% endif %}
+{#        Add New User: <input type="text" name="user"><br>#}
+{#        Block Device: <select name="devices">#}
+{#                        <option value="Samsung Smart TV">Samsung Smart TV</option>#}
+{#                        <option value="Amazon Alexa">Amazon Alexa</option>#}
+{#                      </select> <br>#}
+{#        Rest Time: Starts: <select name="restTimeStart">#}
+{#                        {% for x in range(24) %}#}
+{#                            <option value="{{ x }}">{{ x }}</option>#}
+{#                        {% endfor %}#}
+{#                      </select>#}
+{#                    Ends: <select name="restTimeEnd">#}
+{#                        {% for x in range(24) %}#}
+{#                            <option value="{{ x }}">{{ x }}</option>#}
+{#                        {% endfor %}#}
+{#                        </select>#}
        <br> <input type="submit" value="Submit">
     </form>
 </div>
