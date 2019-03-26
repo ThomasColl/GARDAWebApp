@@ -8,19 +8,19 @@
   <a class="p-2 text-dark" href="{{ url_for('about') }}">About</a>
 </nav>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Analytics</h2>
+    <h2>{{name}}</h2>
 </div>
 <div class="container">
-    <img src="{{ img }}">
-    <!-- TODO: Must create a list of metrics that can be viewed, list them and have a second page ready to pull them in -->
-    <form action="/render_analytics" method="POST">
-        Which analytics would you like to see?:  <select name="choice">
-                                                    {% for choice in choices %}
-                                                        <option value="{{ choice }}">  {{ choice }} </option>
-                                                    {% endfor %}
-                                                </select>
-        <br> <input type="submit" value="Submit">
-    </form>
+  The following options are available:
+    <center>
+        <form action="/send_request_items" method="POST">
+        <!-- TODO Add in JEMMA feature here, communicate with the network and use JEMMA to get back the object changes -->
+            {% for option in options %}
+                <input type="radio" name="action" value="{{option}}"> {{option}} <br>
+            {% endfor %}
+            <input type="submit" value="Select">
+        </form>
+    </center>
 </div>
 {% endblock %}
 {% block footer %}

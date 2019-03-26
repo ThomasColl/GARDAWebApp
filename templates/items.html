@@ -16,7 +16,7 @@
 <div class="container">
   The following items are in your smart home network:
     <center>
-        <form action="/object" method="POST">
+        <form action="/specific_item" method="POST">
             {% for item in items %}
                 <input type="radio" name="item" value="{{item}}"> {{item}} <br>
             {% endfor %}

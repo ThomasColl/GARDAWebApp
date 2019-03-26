@@ -17,16 +17,7 @@
             {{ user }} <br>
         {% endfor %}
     </center>
-  <!-- TODO: Communicate with the smart home, get the list of preferences and place them in a readable way -->
-{#        Your current preferences are: <br>#}
-{#            Valid users:#}
-{#                Admins#}
-{#                Kids#}
-{#            Blocked Devices#}
-{#                Samsung Smart TV#}
-{#            Rest Times#}
-{#                10 PM - 6 AM#}
-    <form action="/sendPreferences" method="POST">
+    <form action="/adjust_preferences" method="POST">
         <input type="radio" name="action" value="add"> Add User <br>
         <input type="radio" name="action" value="edit"> Edit User <br>
         <input type="radio" name="action" value="del"> Delete User <br>

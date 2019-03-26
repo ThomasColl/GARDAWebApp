@@ -13,7 +13,7 @@
 <div class="container">
   <!-- TODO: Communicate with the smart home, get the list of preferences and place them in a readable way -->
     Your current preferences are:
-    <form action="/sendPreferences" method="POST">
+    <form action="/send_request_policies" method="POST">
         {% if action == "add" %}
             <input type="hidden" name="action" value="add">
             Add New User: <br>
@@ -57,21 +57,7 @@
                 {% endfor %}
             </select>
         {% endif %}
-{#        Add New User: <input type="text" name="user"><br>#}
-{#        Block Device: <select name="devices">#}
-{#                        <option value="Samsung Smart TV">Samsung Smart TV</option>#}
-{#                        <option value="Amazon Alexa">Amazon Alexa</option>#}
-{#                      </select> <br>#}
-{#        Rest Time: Starts: <select name="restTimeStart">#}
-{#                        {% for x in range(24) %}#}
-{#                            <option value="{{ x }}">{{ x }}</option>#}
-{#                        {% endfor %}#}
-{#                      </select>#}
-{#                    Ends: <select name="restTimeEnd">#}
-{#                        {% for x in range(24) %}#}
-{#                            <option value="{{ x }}">{{ x }}</option>#}
-{#                        {% endfor %}#}
-{#                        </select>#}
+
        <br> <input type="submit" value="Submit">
     </form>
 </div>
