@@ -12,9 +12,11 @@
 </div>
 <div class="container">
     <center>
-        <img src="{{ img }}">
+        {% if img != "" %}
+            <img src="{{ img }}" >
+        {% endif %}
+
     </center>
-    <!-- TODO: Must create a list of metrics that can be viewed, list them and have a second page ready to pull them in -->
 </div>
 {% endblock %}
 {% block footer %}

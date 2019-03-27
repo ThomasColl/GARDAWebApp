@@ -31,7 +31,7 @@ def items():
     else:
         resp = ""
     raw_items = json.loads(response.text)
-    return render_template('items.html', items=raw_items, response=resp, img=img)
+    return render_template('items.html', items=raw_items, response=resp)
 
 
 @app.route('/specific_item', methods=['GET', 'POST'])
@@ -68,7 +68,7 @@ def send_request_items():
 
 @app.route('/preferences')
 def preferences():
-    raw = requests.get("http://127.0.0.1:5000/request_policies_with_item_access").text
+    raw = requests.get(base_url + "request_policies_with_item_access").text
     users = json.loads(raw)
     return render_template('preferences.html', users=users)
 
@@ -135,8 +135,23 @@ def render_analytics():
         return "This is an invalid access attempt"
     else:
         title = request.form["choice"]
-        x = [1, 2, 3, 4, 6, 8, 10]
-        y = [1, 2, 3, 4, 6, 8, 10]
+        choice = 0
+        if title == "Requests over time":
+            choice = 1
+        elif title == "Successful requests over time":
+            choice = 2
+        elif title == "Unsuccessful requests over time":
+            choice = 3
+        r = requests.post(base_url + 'request_analytics', json={"subject": "user",
+                                                                "object": "analytics",
+                                                                "action": "request",
+                                                                "type": choice})
+        lists = json.loads(r.text)
+        x = lists[0]
+        y = lists[1]
+        if not x or not y:
+            print(lists)
+            return render_template('render_analytics.html', img="", title=title)
         img = PlottingMethods.retrieve_image_uri(x,y)
         return render_template('render_analytics.html', img=img, title=title)
 
