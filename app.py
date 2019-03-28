@@ -1,14 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_mail import Mail, Message
+
 import json
 import requests
 import PlottingMethods
 
 app = Flask(__name__)
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'gardasmarthome@gmail.com'
+app.config['MAIL_PASSWORD'] = '1-2GARDA@itcarlow'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 
 base_url = "http://127.0.0.1:5000/"
 item_response = ""
 item = ""
+response = ""
 g = globals()
 
 
@@ -20,6 +31,26 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+
+@app.route('/send_feedback')
+def send_feedback():
+    response = g["response"]
+    return render_template('send_feedback.html', response=response)
+
+
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    send_email(request.form["sender_email"], request.form["sender_subject"], request.form["sender_feedback"])
+    g["response"] = "Feedback sent!"
+    return redirect(url_for("send_feedback"))
+
+
+def send_email(senders_email, sender_subject, sender_feedback):
+    msg = Message('Feedback from' + senders_email, sender='gardasmarthome@gmail.com',
+                  recipients=['gardasmarthome@gmail.com'])
+    msg.body = "Users Subject: " + sender_subject + "\n" + "Users Feedback: " + sender_feedback
+    mail.send(msg)
 
 
 @app.route('/items')

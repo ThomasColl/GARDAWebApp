@@ -4,19 +4,20 @@
 <nav class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
   <h1 class="my-0 mr-md-auto font-weight-normal">GARDA WebApp</h1>
   <a class="p-2 text-dark" href="{{ url_for('index') }}">Home</a>
-  <a class="p-2 text-dark" href="https://github.com/ThomasColl/GARDA" target="_blank">Source Code</a>
+  <a class="p-2 text-dark" href="https://github.com/ThomasColl/GARDAPy" target="_blank">Source Code</a>
   <a class="p-2 text-dark" href="{{ url_for('about') }}">About</a>
 </nav>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Analytics</h2>
+    <h2>Send Feedback</h2>
+    {% if response != "" %}
+        <h4> {{ response }}</h4>
+    {% endif %}
 </div>
 <div class="container">
-    <form action="/render_analytics" method="POST">
-        Which analytics would you like to see?:  <select name="choice">
-                                                    {% for choice in choices %}
-                                                        <option value="{{ choice }}">  {{ choice }} </option>
-                                                    {% endfor %}
-                                                </select>
+    <form action="/feedback" method="POST">
+        Email (required): <input type="email" name="sender_email" required> <br>
+        Subject: <input type="text" name="sender_subject" required><br>
+        Feedback: <input type="text" name="sender_feedback" required><br>
         <br> <input type="submit" value="Submit">
     </form>
 </div>
