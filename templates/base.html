@@ -16,6 +16,13 @@
     <body>
         <section>
             <div class="content">
+                <nav class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+                  <h1 class="my-0 mr-md-auto font-weight-normal">GARDA WebApp</h1>
+                  <a class="p-2 text-dark" href="{{ url_for('index') }}">Home</a>
+                  <a class="p-2 text-dark" href="https://github.com/ThomasColl/GARDA" target="_blank">Source Code</a>
+                  <a class="p-2 text-dark" href="{{ url_for('about') }}">About</a>
+                 <a class="p-2 text-dark" href="{{ url_for('send_feedback') }}">Send Feedback</a>
+                </nav>
                 {% block content %}
                 {% endblock %}
             </div>

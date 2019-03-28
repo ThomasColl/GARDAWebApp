@@ -36,6 +36,7 @@ def about():
 @app.route('/send_feedback')
 def send_feedback():
     response = g["response"]
+    g["response"] = ""
     return render_template('send_feedback.html', response=response)
 
 
@@ -47,7 +48,7 @@ def feedback():
 
 
 def send_email(senders_email, sender_subject, sender_feedback):
-    msg = Message('Feedback from' + senders_email, sender='gardasmarthome@gmail.com',
+    msg = Message('Feedback from ' + senders_email, sender='gardasmarthome@gmail.com',
                   recipients=['gardasmarthome@gmail.com'])
     msg.body = "Users Subject: " + sender_subject + "\n" + "Users Feedback: " + sender_feedback
     mail.send(msg)
