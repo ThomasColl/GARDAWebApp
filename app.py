@@ -87,11 +87,17 @@ def send_request_items():
         return "This is an invalid access attempt"
     elif request.method == 'POST':
         option = request.form['action']
-        r = requests.post(base_url + 'update_item_state', json={"key": g["item"],
-                                                                "option": option,
-                                                                "subject": "user",
-                                                                "object": "items",
-                                                                "action": "edit"})
+        r = requests.post(base_url + 'update_item_state',
+                          json={"key": g["item"],
+                                "option": option,
+                                "subject": "user",
+                                "object": "items",
+                                "action": "edit"
+                                },
+                          # headers={"Content-Type": "text/plain",
+                          #         "Accept": "application/json"
+                          #          }
+                          )
         g["item"] = ""
         if r.text == "1":
             g["item_response"] = "Successful Request"

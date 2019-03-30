@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import matplotlib.pyplot as plt
 import io
@@ -6,21 +6,21 @@ import urllib, base64
 
 
 def retrieve_image_uri(x_data, y_data):
-    x_data = fix_x_axis(x_data)
-    print(x_data)
-    plt.scatter(x_data, y_data)
-    plt.grid(True)
-    display_axis = []
-    for x in range(len(x_data)):
-        if x == 0 or x == len(x_data)-1:
-            display_axis.append(x_data[x])
-        else:
-            display_axis.append("")
-    plt.xticks(x_data, display_axis)
-    fig = plt.gcf()
+    x, y = plot_by_day(x_data, y_data)
+    plt.plot(x, y)
+
+    x_display = [''] * (len(x) - 2)
+    x_display.insert(0, x[0])
+    x_display.append(x[-1])
+
+    plt.xlabel("Date")
+    plt.xticks(x, x_display)
+    plt.ylabel("No. Requests")
+
+    image = plt.gcf()
 
     buf = io.BytesIO()
-    fig.savefig(buf, format='png')
+    image.savefig(buf, format='png')
     buf.seek(0)
     string = base64.b64encode(buf.read())
 
@@ -30,5 +30,20 @@ def retrieve_image_uri(x_data, y_data):
 def fix_x_axis(x):
     updated_axis = []
     for entry in x:
-        updated_axis.append(datetime.utcfromtimestamp(float(entry)).strftime('%H:%M:%S %d-%m-%Y'))
+        updated_axis.append(datetime.utcfromtimestamp(float(entry)).strftime('%Y-%m-%d'))
     return updated_axis
+
+
+def plot_by_day(x, y):
+    x = fix_x_axis(x)
+
+    return_dict = {}
+
+    for index, value in enumerate(x):
+        if value not in return_dict:
+            return_dict[value] = 1
+        else:
+            return_dict[value] += 1
+
+    return list(return_dict.keys()), list(return_dict.values())
+
