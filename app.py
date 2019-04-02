@@ -93,10 +93,10 @@ def send_request_items():
         with open('encrypted_data.txt', 'rb') as payload:
             headers = {'content-type': 'application/x-www-form-urlencoded'}
             json = "{\"key\": \"" + g["item"] + "\"" \
-                    ", \"option\": \"" + option + "\"" \
-                    ", \"subject\": \"user\"" \
-                    ", \"object\": \"items\"" \
-                    ", \"action\": \"edit\" }"
+                ", \"option\": \"" + option + "\"" \
+                ", \"subject\": \"user\"" \
+                ", \"object\": \"items\"" \
+                ", \"action\": \"adjust\" }"
             RSAMethods.encrypt(json)
             r = requests.post(base_url + "update_item_state", data=payload, headers=headers)
         g["item"] = ""
@@ -135,14 +135,14 @@ def send_request_policies():
         option = request.form['choice']
         print("/send_request_policies: Option = " + option)
         if option == "add":
-            new = request.form["name"] + ", " + request.form["policy"] + ", " + request.form["action"]
+            new = request.form["name"] + ", " + request.form["resource"] + ", " + request.form["action"]
             print(new)
             with open('encrypted_data.txt', 'rb') as payload:
                 headers = {'content-type': 'application/x-www-form-urlencoded'}
                 json_string = "{\"subject\": \"user\"" \
                     ", \"object\": \"policies\"" \
                     ", \"action\": \"add\" " \
-                       ", \"new\": \"" + new.strip() + "\"}"
+                    ", \"new\": \"" + new.strip() + "\"}"
                 print(json_string)
                 RSAMethods.encrypt(json_string)
                 r = requests.post(base_url + "update_policies", data=payload, headers=headers)
@@ -201,10 +201,12 @@ def render_analytics():
             choice = 3
         with open('encrypted_data.txt', 'rb') as payload:
             headers = {'content-type': 'application/x-www-form-urlencoded'}
-            json_string = "{\"subject\": \"user\"" \
-                   ", \"object\": \"analytics\"" \
-                   ", \"action\": \"request\" " \
-                   ", \"type\": " + str(choice) + "}"
+            json_string = "{" \
+                          "\"subject\": \"user\"," \
+                           "\"object\": \"analytics\"," \
+                            "\"action\": \"request\" ," \
+                            "\"type\": " + str(choice) + \
+                          "}"
             print(json_string)
             RSAMethods.encrypt(json_string)
             r = requests.post(base_url + "request_analytics", data=payload, headers=headers)

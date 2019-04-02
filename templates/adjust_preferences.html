@@ -5,23 +5,73 @@
     <h2>Change Preferences</h2>
 </div>
 <div class="container">
-<script src="{{ url_for('static', filename='preference_specific.js') }}"></script>
+{#<script src="{{ url_for('static', filename='preference_specific.js') }}"></script>#}
+            <script>
+                function adjust_action_box() {
+
+                    var mylist = document.getElementById("resource");
+
+                    if(mylist.options[mylist.selectedIndex].value == "items") {
+
+                        var sel = document.getElementById('action');
+
+
+                        for(i=sel.options.length -1; i>=0;i--) {
+                            sel.removeChild(sel.options[i]);
+                        }
+                        var opt = document.createElement('option');
+
+                        opt.appendChild( document.createTextNode("Adjust") );
+                        opt.value = "adjust";
+                        sel.appendChild(opt);
+                    }
+                    else if(mylist.options[mylist.selectedIndex].value == "policies") {
+                        var sel = document.getElementById('action');
+                        for(i=sel.options.length -1; i>=0;i--) {
+                            sel.removeChild(sel.options[i]);
+                        }
+                        var opt = document.createElement('option');
+
+                        opt.appendChild( document.createTextNode("Add") );
+                        opt.value = "add";
+                        sel.appendChild(opt);
+                        var sel = document.getElementById('action');
+                        var opt = document.createElement('option');
+                        opt.appendChild( document.createTextNode("Edit") );
+                        opt.value = "edit";
+                        sel.appendChild(opt);
+                        var sel = document.getElementById('action');
+                        var opt = document.createElement('option');
+                        opt.appendChild( document.createTextNode("Delete") );
+                        opt.value = "del";
+                        sel.appendChild(opt);
+
+                    }
+                    else if(mylist.options[mylist.selectedIndex].value == "analytics") {
+                        var sel = document.getElementById('action');
+                        for(i=sel.options.length -1; i>=0;i--) {
+                            sel.removeChild(sel.options[i]);
+                        }
+                        var opt = document.createElement('option');
+
+                        opt.appendChild( document.createTextNode("Request") );
+                        opt.value = "request";
+                        sel.appendChild(opt);
+                    }
+                }
+            </script>
     Your current preferences are:
-    <form action="/send_request_policies" method="POST">
+    <form action="/send_request_policies" id="policies_form" method="POST">
         {% if action == "add" %}
             <input type="hidden" name="choice" value="add">
             Add New User: <br>
             Username <input type="text" name="name"><br>
-            Resource <select name="policy">
-                        <option value="items"> Devices </option>
+            Resource <select name="resource" id="resource" onchange="adjust_action_box()">
+                        <option value="items"> Items </option>
                         <option value="policies"> Policies </option>
                         <option value="analytics"> Analytics </option>
-                        </select>
-            Action <select name="action">
-                        <option value="add"> Add </option>
-                        <option value="edit"> Edit </option>
-                        <option value="del"> Delete </option>
-                    </select>
+                        </select> <br>
+            Action <select name="action" id="action"><option value="adjust"> Adjust </option></select>
         {% elif action == "edit" %}
             <input type="hidden" name="choice" value="edit">
             Select the policy you want to edit:
@@ -31,17 +81,13 @@
                 {% endfor %}
             </select>
             Edit User: <br>
-            Username <input type="text"  name="name"><br>
-            Resource <select name="resource">
-                        <option value="items"> Devices </option>
+            Username <input type="text" name="name"><br>
+            Resource <select name="resource" id="resource" onchange="adjust_action_box()">
+                        <option value="items"> Items </option>
                         <option value="policies"> Policies </option>
                         <option value="analytics"> Analytics </option>
-                        </select>
-            Action <select name="action">
-                        <option value="add"> Add </option>
-                        <option value="edit"> Edit </option>
-                        <option value="del"> Delete </option>
-                    </select>
+                        </select> <br>
+            Action <select name="action" id="action"><option value="adjust"> Adjust </option></select>
         {% elif action == "del" %}
             <input type="hidden" name="choice" value="del">
             Select the policy you want to delete:
