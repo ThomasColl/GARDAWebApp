@@ -5,7 +5,7 @@
     <h2>Change Preferences</h2>
 </div>
 <div class="container">
-  <!-- TODO: Communicate with the smart home, get the list of preferences and place them in a readable way -->
+<script src="{{ url_for('static', filename='preference_specific.js') }}"></script>
     Your current preferences are:
     <form action="/send_request_policies" method="POST">
         {% if action == "add" %}

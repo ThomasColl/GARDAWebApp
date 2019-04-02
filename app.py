@@ -4,6 +4,7 @@ from flask_mail import Mail, Message
 import json
 import requests
 import PlottingMethods
+import RSAMethods
 
 app = Flask(__name__)
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -89,14 +90,15 @@ def send_request_items():
         return "This is an invalid access attempt"
     elif request.method == 'POST':
         option = request.form['action']
-        r = requests.post(base_url + 'update_item_state',
-                          json={"key": g["item"],
-                                "option": option,
-                                "subject": "user",
-                                "object": "items",
-                                "action": "edit"
-                                },
-                          )
+        with open('encrypted_data.txt', 'rb') as payload:
+            headers = {'content-type': 'application/x-www-form-urlencoded'}
+            json = "{\"key\": \"" + g["item"] + "\"" \
+                    ", \"option\": \"" + option + "\"" \
+                    ", \"subject\": \"user\"" \
+                    ", \"object\": \"items\"" \
+                    ", \"action\": \"edit\" }"
+            RSAMethods.encrypt(json)
+            r = requests.post(base_url + "update_item_state", data=payload, headers=headers)
         g["item"] = ""
         if r.text == "1":
             g["item_response"] = "Successful Request"
@@ -134,24 +136,40 @@ def send_request_policies():
         print("/send_request_policies: Option = " + option)
         if option == "add":
             new = request.form["name"] + ", " + request.form["policy"] + ", " + request.form["action"]
-            r = requests.post(base_url + 'update_policies', json={"subject": "user",
-                                                                  "object": "policies",
-                                                                  "action": "add",
-                                                                  "new": new.strip()})
+            print(new)
+            with open('encrypted_data.txt', 'rb') as payload:
+                headers = {'content-type': 'application/x-www-form-urlencoded'}
+                json_string = "{\"subject\": \"user\"" \
+                    ", \"object\": \"policies\"" \
+                    ", \"action\": \"add\" " \
+                       ", \"new\": \"" + new.strip() + "\"}"
+                print(json_string)
+                RSAMethods.encrypt(json_string)
+                r = requests.post(base_url + "update_policies", data=payload, headers=headers)
         elif option == "edit":
             new = request.form["name"] + ", " + request.form["resource"] + ", " + request.form["action"]
             old = request.form["policy"]
-            r = requests.post(base_url + 'update_policies', json={"subject": "user",
-                                                                  "object": "policies",
-                                                                  "action": "edit",
-                                                                  "new": new.strip(),
-                                                                  "old": old.strip()})
+            with open('encrypted_data.txt', 'rb') as payload:
+                headers = {'content-type': 'application/x-www-form-urlencoded'}
+                json_string = "{\"subject\": \"user\"" \
+                    ", \"object\": \"policies\"" \
+                    ", \"action\": \"edit\" " \
+                    ", \"new\": \"" + new.strip() + "\" " \
+                    ", \"old\": \"" + old.strip() + "\"}"
+                print(json_string)
+                RSAMethods.encrypt(json_string)
+                r = requests.post(base_url + "update_policies", data=payload, headers=headers)
         elif option == "del":
             old = request.form["policy"]
-            r = requests.post(base_url + 'update_policies', json={"subject": "user",
-                                                                  "object": "policies",
-                                                                  "action": "del",
-                                                                  "old": old.strip()})
+            with open('encrypted_data.txt', 'rb') as payload:
+                headers = {'content-type': 'application/x-www-form-urlencoded'}
+                json_string = "{\"subject\": \"user\"" \
+                    ", \"object\": \"policies\"" \
+                    ", \"action\": \"del\" " \
+                    ", \"old\": \"" + old.strip() + "\"}"
+                print(json_string)
+                RSAMethods.encrypt(json_string)
+                r = requests.post(base_url + "update_policies", data=payload, headers=headers)
         print(r.text)
         if r.text == "1":
             g["item_response"] = "Successful Request"
@@ -181,10 +199,15 @@ def render_analytics():
             choice = 2
         elif title == "Unsuccessful requests over time":
             choice = 3
-        r = requests.post(base_url + 'request_analytics', json={"subject": "user",
-                                                                "object": "analytics",
-                                                                "action": "request",
-                                                                "type": choice})
+        with open('encrypted_data.txt', 'rb') as payload:
+            headers = {'content-type': 'application/x-www-form-urlencoded'}
+            json_string = "{\"subject\": \"user\"" \
+                   ", \"object\": \"analytics\"" \
+                   ", \"action\": \"request\" " \
+                   ", \"type\": " + str(choice) + "}"
+            print(json_string)
+            RSAMethods.encrypt(json_string)
+            r = requests.post(base_url + "request_analytics", data=payload, headers=headers)
         lists = json.loads(r.text)
         x = lists[0]
         y = lists[1]
