@@ -8,12 +8,18 @@
     {% endif %}
 </div>
 <div class="container">
+    <center>
     <form action="/feedback" method="POST">
-        Email (required): <input type="email" name="sender_email" required> <br>
-        Subject: <input type="text" name="sender_subject" required><br>
-        Feedback: <input type="text" name="sender_feedback" required><br>
+        Email (required): <br>
+        <input type="email" name="sender_email" required> <br>
+        Subject: <br>
+        <input type="text" name="sender_subject" required><br>
+        Feedback: <br>
+        <textarea name="sender_feedback" required></textarea><br>
+
         <br> <input type="submit" value="Submit">
     </form>
+    </center>
 </div>
 {% endblock %}
 {% block footer %}
