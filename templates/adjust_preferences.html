@@ -22,7 +22,7 @@
                         <option value="edit"> Edit </option>
                         <option value="del"> Delete </option>
                     </select>
-        {% elif response != "edit" %}
+        {% elif action == "edit" %}
             <input type="hidden" name="action" value="edit">
             Select the policy you want to edit:
             <select name="policy">
@@ -42,8 +42,8 @@
                         <option value="edit"> Edit </option>
                         <option value="del"> Delete </option>
                     </select>
-        {% elif response != "del" %}
-            <input type="hidden" name="action" value="edit">
+        {% elif action == "del" %}
+            <input type="hidden" name="action" value="del">
             Select the policy you want to delete:
             <select name="policy">
                 {% for p in policy %}

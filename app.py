@@ -94,9 +94,6 @@ def send_request_items():
                                 "object": "items",
                                 "action": "edit"
                                 },
-                          # headers={"Content-Type": "text/plain",
-                          #         "Accept": "application/json"
-                          #          }
                           )
         g["item"] = ""
         if r.text == "1":
@@ -118,6 +115,7 @@ def adjust_preferences():
     elif request.method == 'POST':
         # TODO Add in drop down list in html
         action = request.form["action"]
+        print(action)
         policies = ""
         if action == "edit" or action == "del":
             raw = requests.get(base_url + "request_all_policies").text
@@ -131,26 +129,27 @@ def send_request_policies():
         return "This is an invalid access attempt"
     elif request.method == 'POST':
         option = request.form['action']
+        print("/send_request_policies: Option = " + option)
         if option == "add":
             new = request.form["name"] + ", " + request.form["policy"] + ", " + request.form["action"]
             r = requests.post(base_url + 'update_policies', json={"subject": "user",
                                                                   "object": "policies",
                                                                   "action": "add",
-                                                                  "new": new})
+                                                                  "new": new.strip()})
         elif option == "edit":
             new = request.form["name"] + ", " + request.form["resource"] + ", " + request.form["action"]
             old = request.form["policy"]
             r = requests.post(base_url + 'update_policies', json={"subject": "user",
                                                                   "object": "policies",
                                                                   "action": "edit",
-                                                                  "new": new,
-                                                                  "old": old})
+                                                                  "new": new.strip(),
+                                                                  "old": old.strip()})
         elif option == "del":
             old = request.form["policy"]
             r = requests.post(base_url + 'update_policies', json={"subject": "user",
                                                                   "object": "policies",
                                                                   "action": "del",
-                                                                  "old": old})
+                                                                  "old": old.strip()})
         print(r.text)
         if r.text == "1":
             g["item_response"] = "Successful Request"
