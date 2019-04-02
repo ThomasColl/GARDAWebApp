@@ -7,7 +7,7 @@ import PlottingMethods
 
 app = Flask(__name__)
 app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
+app.config['MAIL_PORT'] = 443
 app.config['MAIL_USERNAME'] = 'gardasmarthome@gmail.com'
 app.config['MAIL_PASSWORD'] = '1-2GARDA@itcarlow'
 app.config['MAIL_USE_TLS'] = False
@@ -17,6 +17,7 @@ mail = Mail(app)
 
 
 base_url = "http://127.0.0.1:5000/"
+email_response = ""
 item_response = ""
 item = ""
 response = ""
@@ -28,30 +29,31 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @app.route('/send_feedback')
 def send_feedback():
-    response = g["response"]
-    g["response"] = ""
+    response = g["email_response"]
+    g["email_response"] = ""
     return render_template('send_feedback.html', response=response)
 
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
     send_email(request.form["sender_email"], request.form["sender_subject"], request.form["sender_feedback"])
-    g["response"] = "Feedback sent!"
+    g["email_response"] = "Feedback sent!"
     return redirect(url_for("send_feedback"))
 
 
-def send_email(senders_email, sender_subject, sender_feedback):
+def send_email(senders_email, senders_subject, senders_feedback):
+    print("email " + senders_email)
+    print("sub " + senders_subject)
+    print("feed " + senders_feedback)
     msg = Message('Feedback from ' + senders_email, sender='gardasmarthome@gmail.com',
                   recipients=['gardasmarthome@gmail.com'])
-    msg.body = "Users Subject: " + sender_subject + "\n" + "Users Feedback: " + sender_feedback
+    print("message defined")
+    msg.body = "Users Subject: " + senders_subject + "\n" + "Users Feedback: " + senders_feedback
+    print("body set")
     mail.send(msg)
+    print("message sent")
 
 
 @app.route('/items')

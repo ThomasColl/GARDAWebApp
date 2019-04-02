@@ -4,7 +4,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="Thomas Coll">
         <link rel="shortcut icon" href="{{ url_for('static', filename='garda.png') }}" type="image/x-icon">
         <link rel="icon" href="{{ url_for('static', filename='garda.png') }}" type="image/x-icon">
         <title>{% block title %}{% endblock %} - ABRA</title>
@@ -19,8 +19,7 @@
                 <nav class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
                   <h1 class="my-0 mr-md-auto font-weight-normal">GARDA WebApp</h1>
                   <a class="p-2 text-dark" href="{{ url_for('index') }}">Home</a>
-                  <a class="p-2 text-dark" href="https://github.com/ThomasColl/GARDA" target="_blank">Source Code</a>
-                  <a class="p-2 text-dark" href="{{ url_for('about') }}">About</a>
+                  <a class="p-2 text-dark" href="https://github.com/ThomasColl/GARDAWebApp" target="_blank">Source Code</a>
                  <a class="p-2 text-dark" href="{{ url_for('send_feedback') }}">Send Feedback</a>
                 </nav>
                 {% block content %}
