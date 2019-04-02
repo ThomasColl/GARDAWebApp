@@ -128,7 +128,7 @@ def send_request_policies():
     if request.method == 'GET':
         return "This is an invalid access attempt"
     elif request.method == 'POST':
-        option = request.form['action']
+        option = request.form['choice']
         print("/send_request_policies: Option = " + option)
         if option == "add":
             new = request.form["name"] + ", " + request.form["policy"] + ", " + request.form["action"]

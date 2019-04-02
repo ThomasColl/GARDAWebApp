@@ -9,7 +9,7 @@
     Your current preferences are:
     <form action="/send_request_policies" method="POST">
         {% if action == "add" %}
-            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="choice" value="add">
             Add New User: <br>
             Username <input type="text" name="name"><br>
             Resource <select name="policy">
@@ -23,7 +23,7 @@
                         <option value="del"> Delete </option>
                     </select>
         {% elif action == "edit" %}
-            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="choice" value="edit">
             Select the policy you want to edit:
             <select name="policy">
                 {% for p in policy %}
@@ -43,7 +43,7 @@
                         <option value="del"> Delete </option>
                     </select>
         {% elif action == "del" %}
-            <input type="hidden" name="action" value="del">
+            <input type="hidden" name="choice" value="del">
             Select the policy you want to delete:
             <select name="policy">
                 {% for p in policy %}
