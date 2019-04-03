@@ -8,10 +8,14 @@
   The following options are available:
     <center>
         <form action="/send_request_items" method="POST">
+        {% if type == "Switch" %}
         <!-- TODO Add in JEMMA feature here, communicate with the network and use JEMMA to get back the object changes -->
             {% for option in options %}
                 <input type="radio" name="action" value="{{option}}"> {{option}} <br>
             {% endfor %}
+        {% elif type == "String" %}
+            New Value: <input type="text" name="action" required><br>
+        {% endif %}
             <input type="submit" value="Select">
         </form>
     </center>
