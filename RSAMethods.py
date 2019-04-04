@@ -5,6 +5,8 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 
 def encrypt(message):
     data = message.encode("utf-8")
+    print(data)
+    print(type(data))
     file_out = open("encrypted_data.txt", "wb")
 
     recipient_key = RSA.import_key(open("public.pem").read())
