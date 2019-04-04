@@ -6,6 +6,7 @@ import urllib, base64
 
 
 def retrieve_image_uri(x_data, y_data):
+    plt.clf()
     x, y = plot_by_day(x_data, y_data)
     plt.plot(x, y)
 

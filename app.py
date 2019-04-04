@@ -9,7 +9,7 @@ import RSAMethods
 
 app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 80
+app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'gardasmarthome@gmail.com'
 app.config['MAIL_PASSWORD'] = '1-2GARDA@itcarlow'
 app.config['MAIL_USE_TLS'] = False
