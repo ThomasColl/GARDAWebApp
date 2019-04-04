@@ -31,7 +31,8 @@ def retrieve_image_uri(x_data, y_data):
 def fix_x_axis(x):
     updated_axis = []
     for entry in x:
-        updated_axis.append(datetime.utcfromtimestamp(float(entry)).strftime('%Y-%m-%d'))
+        updated_axis.append(datetime.utcfromtimestamp(
+            float(entry)).strftime('%Y-%m-%d'))
     return updated_axis
 
 
