@@ -1,107 +1,130 @@
 {% extends "base.html" %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Change Preferences</h2>
-</div>
-<div class="container">
-            <script>
-                function adjust_action_box() {
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h2>Change Preferences</h2>
+    </div>
+    <div class="container">
+        <script>
+            function adjust_action_box() {
 
-                    var mylist = document.getElementById("resource");
+                var mylist = document.getElementById("resource");
 
-                    if(mylist.options[mylist.selectedIndex].value == "items") {
+                if (mylist.options[mylist.selectedIndex].value == "items") {
 
-                        var sel = document.getElementById('action');
+                    var sel = document.getElementById('action');
 
 
-                        for(i=sel.options.length -1; i>=0;i--) {
-                            sel.removeChild(sel.options[i]);
-                        }
-                        var opt = document.createElement('option');
-
-                        opt.appendChild( document.createTextNode("Adjust") );
-                        opt.value = "adjust";
-                        sel.appendChild(opt);
+                    for (i = sel.options.length - 1; i >= 0; i--) {
+                        sel.removeChild(sel.options[i]);
                     }
-                    else if(mylist.options[mylist.selectedIndex].value == "policies") {
-                        var sel = document.getElementById('action');
-                        for(i=sel.options.length -1; i>=0;i--) {
-                            sel.removeChild(sel.options[i]);
-                        }
-                        var opt = document.createElement('option');
+                    var opt = document.createElement('option');
 
-                        opt.appendChild( document.createTextNode("Add") );
-                        opt.value = "add";
-                        sel.appendChild(opt);
-                        var sel = document.getElementById('action');
-                        var opt = document.createElement('option');
-                        opt.appendChild( document.createTextNode("Edit") );
-                        opt.value = "edit";
-                        sel.appendChild(opt);
-                        var sel = document.getElementById('action');
-                        var opt = document.createElement('option');
-                        opt.appendChild( document.createTextNode("Delete") );
-                        opt.value = "del";
-                        sel.appendChild(opt);
-
+                    opt.appendChild(document.createTextNode("Adjust"));
+                    opt.value = "adjust";
+                    sel.appendChild(opt);
+                } else if (mylist.options[mylist.selectedIndex].value == "policies") {
+                    var sel = document.getElementById('action');
+                    for (i = sel.options.length - 1; i >= 0; i--) {
+                        sel.removeChild(sel.options[i]);
                     }
-                    else if(mylist.options[mylist.selectedIndex].value == "analytics") {
-                        var sel = document.getElementById('action');
-                        for(i=sel.options.length -1; i>=0;i--) {
-                            sel.removeChild(sel.options[i]);
-                        }
-                        var opt = document.createElement('option');
+                    var opt = document.createElement('option');
 
-                        opt.appendChild( document.createTextNode("Request") );
-                        opt.value = "request";
-                        sel.appendChild(opt);
+                    opt.appendChild(document.createTextNode("Add"));
+                    opt.value = "add";
+                    sel.appendChild(opt);
+                    var sel = document.getElementById('action');
+                    var opt = document.createElement('option');
+                    opt.appendChild(document.createTextNode("Edit"));
+                    opt.value = "edit";
+                    sel.appendChild(opt);
+                    var sel = document.getElementById('action');
+                    var opt = document.createElement('option');
+                    opt.appendChild(document.createTextNode("Delete"));
+                    opt.value = "del";
+                    sel.appendChild(opt);
+
+                } else if (mylist.options[mylist.selectedIndex].value == "analytics") {
+                    var sel = document.getElementById('action');
+                    for (i = sel.options.length - 1; i >= 0; i--) {
+                        sel.removeChild(sel.options[i]);
                     }
+                    var opt = document.createElement('option');
+
+                    opt.appendChild(document.createTextNode("Request"));
+                    opt.value = "request";
+                    sel.appendChild(opt);
                 }
-            </script>
-    <form action="/send_request_policies" id="policies_form" method="POST">
-        {% if action == "add" %}
-            <input type="hidden" name="choice" value="add">
-            Add New User: <br>
-            Username <input type="text" name="name"><br>
-            Resource <select name="resource" id="resource" onchange="adjust_action_box()">
-                        <option value="items"> Items </option>
-                        <option value="policies"> Policies </option>
-                        <option value="analytics"> Analytics </option>
-                        </select> <br>
-            Action <select name="action" id="action"><option value="adjust"> Adjust </option></select>
-        {% elif action == "edit" %}
-            <input type="hidden" name="choice" value="edit">
-            Select the policy you want to edit:
-            <select name="policy">
-                {% for p in policy %}
-                    <option value="{{ p }}">  {{ p }} </option>
-                {% endfor %}
-            </select>
-            Edit User: <br>
-            Username <input type="text" name="name"><br>
-            Resource <select name="resource" id="resource" onchange="adjust_action_box()">
-                        <option value="items"> Items </option>
-                        <option value="policies"> Policies </option>
-                        <option value="analytics"> Analytics </option>
-                        </select> <br>
-            Action <select name="action" id="action"><option value="adjust"> Adjust </option></select>
-        {% elif action == "del" %}
-            <input type="hidden" name="choice" value="del">
-            Select the policy you want to delete:
-            <select name="policy">
-                {% for p in policy %}
-                    <option value="{{ p }}">  {{ p }} </option>
-                {% endfor %}
-            </select>
-        {% endif %}
+            }
+        </script>
+        <form action="/send_request_policies" id="policies_form" method="POST">
+            {% if action == "add" %}
+                <input type="hidden" name="choice" value="add">
+                <div class="form-group">
+                    <label for="name">Add New User:</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="resource">Resource</label>
+                    <select multiple class="form-control" name="resource" id="resource" onchange="adjust_action_box()">
+                        <option value="items"> Items</option>
+                        <option value="policies"> Policies</option>
+                        <option value="analytics"> Analytics</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="action">Action</label>
+                    <select multiple class="form-control" name="action" id="action">
+                        <option value="adjust"> Adjust</option>
+                    </select>
+                </div>
+            {% elif action == "edit" %}
+                <input type="hidden" name="choice" value="edit">
+                <div class="form-group">
+                    <label for="policy">Policy to edit:</label>
+                    <select multiple class="form-control" name="policy" id="policy">
+                        {% for p in policy %}
+                            <option value="{{ p }}">  {{ p }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Edit User:</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="resource">Resource</label>
+                    <select multiple class="form-control" name="resource" id="resource" onchange="adjust_action_box()">
+                        <option value="items"> Items</option>
+                        <option value="policies"> Policies</option>
+                        <option value="analytics"> Analytics</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="action">Action</label>
+                    <select multiple class="form-control" name="action" id="action">
+                        <option value="adjust"> Adjust</option>
+                    </select>
+                </div>
+            {% elif action == "del" %}
+                <input type="hidden" name="choice" value="del">
+                <div class="form-group">
+                    <label for="policy">Policy to delete:</label>
+                    <select multiple class="form-control" name="policy" id="policy">
+                        {% for p in policy %}
+                            <option value="{{ p }}">  {{ p }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
 
-       <br> <input type="submit" value="Submit">
-    </form>
-</div>
+            <br> <br>
+            <input type="submit" value="Select" class="btn btn-outline-secondary">
+        </form>
+    </div>
 {% endblock %}
 {% block footer %}
-<div id="bottom-footer">
-    <span class="text-muted">&copy 2018 GARDA</span>
-</div>
+    <div id="bottom-footer">
+        <span class="text-muted">&copy 2018 GARDA</span>
+    </div>
 {% endblock %}

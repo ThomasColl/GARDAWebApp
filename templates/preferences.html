@@ -1,26 +1,38 @@
 {% extends "base.html" %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Change Preferences</h2>
-</div>
-<div class="container">
-    <center>
-        Valid users: <br>
-        {% for user in users %}
-            {{ user }} <br>
-        {% endfor %}
-    </center>
-    <form action="/adjust_preferences" method="POST">
-        <input type="radio" name="action" value="add"> Add User <br>
-        <input type="radio" name="action" value="edit"> Edit User <br>
-        <input type="radio" name="action" value="del"> Delete User <br>
-        <input type="submit" value="Change Preferences">
-    </form>
-</div>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h2>Change Preferences</h2>
+    </div>
+    <div class="container">
+        <center>
+            Users on the system: <br>
+            {% for user in users %}
+                {{ user }} <br>
+            {% endfor %}
+        </center>
+        <form action="/adjust_preferences" method="POST">
+            <div class="custom_radio">
+                <div class="custom_radio-default">
+                    <input type="radio" name="action" value="add" id="add"/>
+                    <label for="add">Add User</label>
+                </div>
+                <div class="custom_radio-default">
+                    <input type="radio" name="action" value="edit" id="edit"/>
+                    <label for="edit">Edit User</label>
+                </div>
+                <div class="custom_radio-default">
+                    <input type="radio" name="action" value="del" id="del"/>
+                    <label for="del">Delete User</label>
+                </div>
+                <br><br>
+                <input type="submit" value="Select" class="btn btn-outline-secondary">
+            </div>
+        </form>
+    </div>
 {% endblock %}
 {% block footer %}
-<div id="bottom-footer">
-    <span class="text-muted">&copy 2018 GARDA</span>
-</div>
+    <div id="bottom-footer">
+        <span class="text-muted">&copy 2018 GARDA</span>
+    </div>
 {% endblock %}

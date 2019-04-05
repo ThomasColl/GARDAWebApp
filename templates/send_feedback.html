@@ -1,29 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Send Feedback</h2>
-    {% if response != "" %}
-        <h4> {{ response }}</h4>
-    {% endif %}
-</div>
-<div class="container">
-    <center>
-    <form action="/feedback" method="POST">
-        Email (required): <br>
-        <input type="email" name="sender_email" required> <br>
-        Subject: <br>
-        <input type="text" name="sender_subject" required><br>
-        Feedback: <br>
-        <textarea name="sender_feedback" required></textarea><br>
-
-        <br> <input type="submit" value="Submit">
-    </form>
-    </center>
-</div>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h2>Send Feedback</h2>
+        {% if response != "" %}
+            <h4> {{ response }}</h4>
+        {% endif %}
+    </div>
+    <div class="container">
+        <form action="/feedback" method="POST">
+            <div class="form-group">
+                <label for="sender_email">Email:</label>
+                <input type="email" class="form-control" name="sender_email" id="sender_email" placeholder="Email"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="sender_subject">Subject:</label>
+                <input type="text" class="form-control" name="sender_subject" id="sender_subject"
+                       placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+                <label for="sender_feedback">Feedback:</label>
+                <textarea class="form-control" name="sender_feedback" id="sender_feedback" rows="3"
+                          placeholder="Feedback" required></textarea>
+            </div>
+            <br><br>
+            <input type="submit" value="Select" class="btn btn-outline-secondary">
+        </form>
+    </div>
 {% endblock %}
 {% block footer %}
-<div id="bottom-footer">
-    <span class="text-muted">&copy 2018 GARDA</span>
-</div>
+    <div id="bottom-footer">
+        <span class="text-muted">&copy 2018 GARDA</span>
+    </div>
 {% endblock %}

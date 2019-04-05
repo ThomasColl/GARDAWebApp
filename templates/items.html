@@ -1,26 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Items</h2>
-    {% if response != "" %}
-        <h4> {{ response }}</h4>
-    {% endif %}
-</div>
-<div class="container">
-  The following items are in your smart home network:
-    <center>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h2>Items</h2>
+        {% if response != "" %}
+            <h4> {{ response }}</h4>
+        {% endif %}
+    </div>
+    <div class="container">
+        The following items are in your smart home network: <br>
         <form action="/specific_item" method="POST">
-            {% for item in items %}
-                <input type="radio" name="item" value="{{item}}"> {{item}} <br>
-            {% endfor %}
-            <input type="submit" value="Select">
+            <br>
+            <div class="custom_radio">
+                {% for item in items %}
+                    <div class="custom_radio-default">
+                        <input type="radio" name="item" value="{{ item }}" id="{{ item }}"/>
+                        <label for="{{ item }}">{{ item }}</label>
+                    </div>
+                {% endfor %}
+                <br><br>
+                <input type="submit" value="Select" class="btn btn-outline-secondary">
+            </div>
         </form>
-    </center>
-</div>
+    </div>
 {% endblock %}
 {% block footer %}
-<div id="bottom-footer">
-    <span class="text-muted">&copy 2018 GARDA</span>
-</div>
+    <div id="bottom-footer">
+        <span class="text-muted">&copy 2018 GARDA</span>
+    </div>
 {% endblock %}

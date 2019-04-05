@@ -1,28 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>{{name}}</h2>
-</div>
-<div class="container">
-  The following options are available:
-    <center>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h2>{{ name }}</h2>
+    </div>
+    <div class="container">
+        The following options are available:
         <form action="/send_request_items" method="POST">
-        {% if type == "Switch" %}
-        <!-- TODO Add in JEMMA feature here, communicate with the network and use JEMMA to get back the object changes -->
-            {% for option in options %}
-                <input type="radio" name="action" value="{{option}}"> {{option}} <br>
-            {% endfor %}
-        {% elif type == "String" %}
-            New Value: <input type="text" name="action" required><br>
-        {% endif %}
-            <input type="submit" value="Select">
+            {% if type == "Switch" %}
+                <br>
+                <div class="custom_radio">
+                    {% for option in options %}
+                        <div class="custom_radio-default">
+                            <input type="radio" name="action" value="{{ option }}" id="{{ option }}"/>
+                            <label for="{{ option }}">{{ option }}</label>
+                        </div>
+                    {% endfor %}
+                    <br><br>
+                    <input type="submit" value="Select" class="btn btn-outline-secondary">
+                </div>
+            {% elif type == "String" %}
+                New Value: <input type="text" name="action" required><br>
+                <input type="submit" value="Select" class="btn btn-outline-secondary">
+            {% elif type == "Number" %}
+                New Value: <input type="number" name="action" required><br>
+                <input type="submit" value="Select" class="btn btn-outline-secondary">
+            {% endif %}
         </form>
-    </center>
-</div>
+    </div>
 {% endblock %}
 {% block footer %}
-<div id="bottom-footer">
-    <span class="text-muted">&copy 2018 GARDA</span>
-</div>
+    <div id="bottom-footer">
+        <span class="text-muted">&copy 2018 GARDA</span>
+    </div>
 {% endblock %}

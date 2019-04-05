@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h2>Analytics</h2>
-</div>
-<div class="container">
-    <form action="/render_analytics" method="POST">
-        Which analytics would you like to see?:  <select name="choice">
-                                                    {% for choice in choices %}
-                                                        <option value="{{ choice }}">  {{ choice }} </option>
-                                                    {% endfor %}
-                                                </select>
-        <br> <input type="submit" value="Submit">
-    </form>
-</div>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h2>Analytics</h2>
+    </div>
+    <div class="container">
+        <form action="/render_analytics" method="POST">
+            <div class="form-group">
+                <label for="choice">Which analytics would you like to see:</label>
+                <select multiple class="form-control" name="choice" id="choice">
+                    {% for choice in choices %}
+                        <option value="{{ choice }}">  {{ choice }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br><br>
+            <input type="submit" value="Select" class="btn btn-outline-secondary">
+        </form>
+    </div>
 {% endblock %}
 {% block footer %}
-<div id="bottom-footer">
-    <span class="text-muted">&copy 2018 GARDA</span>
-</div>
+    <div id="bottom-footer">
+        <span class="text-muted">&copy 2018 GARDA</span>
+    </div>
 {% endblock %}

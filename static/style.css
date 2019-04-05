@@ -133,7 +133,7 @@ html, html {
 }
 
 #bottom-footer {
-    position: relative;
+    position: absolute;
     bottom: 0;
     max-width: 100%;
     min-width: 100%;
@@ -177,4 +177,58 @@ html, html {
 
 .heightSet {
     max-height: 100px;
+}
+
+.custom_radio div {
+  clear: both;
+  overflow: hidden;
+}
+
+.custom_radio label {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #D1D3D4;
+  font-weight: normal;
+}
+
+.custom_radio input[type="radio"]:empty,
+.custom_radio input[type="checkbox"]:empty {
+  display: none;
+}
+
+.custom_radio input[type="radio"]:empty ~ label,
+.custom_radio input[type="checkbox"]:empty ~ label {
+  position: relative;
+  line-height: 2.5em;
+  text-indent: 3.25em;
+  margin-top: 2em;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.custom_radio input[type="radio"]:empty ~ label:before,
+
+.custom_radio input[type="radio"]:hover:not(:checked) ~ label,
+.custom_radio input[type="checkbox"]:hover:not(:checked) ~ label {
+  color: #888;
+}
+
+.custom_radio input[type="radio"]:checked ~ label,
+.custom_radio input[type="checkbox"]:checked ~ label {
+  color: #777;
+}
+
+
+.custom_radio input[type="radio"]:focus ~ label:before,
+.custom_radio input[type="checkbox"]:focus ~ label:before {
+  box-shadow: 0 0 0 3px #999;
+}
+
+.custom_radio-default input[type="radio"]:checked ~ label:before,
+.custom_radio-default input[type="checkbox"]:checked ~ label:before {
+  color: #333;
+  background-color: #ccc;
 }
