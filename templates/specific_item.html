@@ -12,7 +12,7 @@
                 <div class="custom_radio">
                     {% for option in options %}
                         <div class="custom_radio-default">
-                            <input type="radio" name="action" value="{{ option }}" id="{{ option }}"/>
+                            <input type="radio" name="action" value="{{ option }}" id="{{ option }}" required/>
                             <label for="{{ option }}">{{ option }}</label>
                         </div>
                     {% endfor %}
