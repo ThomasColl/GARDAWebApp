@@ -53,16 +53,12 @@ def send_email(senders_email, senders_subject, senders_feedback):
                   "\", \"feed\": \"" + senders_feedback + "\" " + \
                   "}"
     r = send_request(json_string, "receive_feedback")
-    #TODO Find out why SMTP stopped working
-    # print("email " + senders_email)
-    # print("sub " + senders_subject)
-    # print("feed " + senders_feedback)
-    # msg = Message('Feedback from ' + senders_email,
-    #               sender='gardasmarthome@gmail.com',
-    #               recipients=['gardasmarthome@gmail.com'])
-    # msg.body = "Users Subject: " + senders_subject + \
-    #            "\n" + "Users Feedback: " + senders_feedback
-    # mail.send(msg)
+    msg = Message('Feedback from ' + senders_email,
+                  sender='gardasmarthome@gmail.com',
+                  recipients=['gardasmarthome@gmail.com'])
+    msg.body = "Users Subject: " + senders_subject + \
+               "\n" + "Users Feedback: " + senders_feedback
+    mail.send(msg)
     print("message sent")
 
 
@@ -224,6 +220,7 @@ def send_request(json_string, url_location):
         RSAMethods.encrypt(json_string)
         r = requests.post(base_url + url_location, data=payload,
                           headers=headers)
+    RSAMethods.clean()
     return r
 
 

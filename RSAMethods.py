@@ -21,3 +21,7 @@ def encrypt(message):
     ciphertext, tag = cipher_aes.encrypt_and_digest(data)
     [file_out.write(x) for x in (enc_session_key,
                                  cipher_aes.nonce, tag, ciphertext)]
+    file_out.close()
+
+def clean():
+    open('encrypted_data.txt', 'w').close()
