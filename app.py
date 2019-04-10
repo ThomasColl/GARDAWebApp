@@ -221,6 +221,7 @@ def send_request(json_string, url_location):
         r = requests.post(base_url + url_location, data=payload,
                           headers=headers)
     RSAMethods.clean()
+
     return r
 
 
