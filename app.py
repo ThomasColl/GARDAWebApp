@@ -16,8 +16,13 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
+config_file = open("config.iml", "r")
+contents = config_file.read()
+details = contents.split("\n")
+config_file.close()
 
-base_url = "http://127.0.0.1:5000/"
+user = details[0].split("::")[1]
+base_url = details[1].split("::")[1]
 email_response = ""
 item_response = ""
 item = ""
@@ -100,7 +105,7 @@ def send_request_items():
         json_string = "{ " + \
                       "\"key\": \"" + g["item"] + \
                       "\", \"option\": \"" + option + \
-                      "\", \"subject\": \"user\"," \
+                      "\", \"subject\": \"" + user + "\"," \
                       " \"object\": \"items\"," \
                       " \"action\": \"adjust\" " \
                       "}"
@@ -144,7 +149,7 @@ def send_request_policies():
             new = request.form["name"] + ", " + request.form["resource"] \
                     + ", " + request.form["action"]
             print(new)
-            json_string = "{\"subject\": \"user\"" \
+            json_string = "{\"subject\": \"" + user + "\"" \
                           ", \"object\": \"policies\"" \
                           ", \"action\": \"add\" " \
                           ", \"new\": \"" + new.strip() + "\"}"
@@ -153,7 +158,7 @@ def send_request_policies():
             new = request.form["name"] + ", " + request.form["resource"] \
                   + ", " + request.form["action"]
             old = request.form["policy"]
-            json_string = "{\"subject\": \"user\"" \
+            json_string = "{\"subject\": \"" + user + "\"" \
                           ", \"object\": \"policies\"" \
                           ", \"action\": \"edit\" " \
                           ", \"new\": \"" + new.strip() + \
@@ -161,7 +166,7 @@ def send_request_policies():
             r = send_request(json_string, "update_policies")
         elif option == "del":
             old = request.form["policy"]
-            json_string = "{\"subject\": \"user\"" \
+            json_string = "{\"subject\": \"" + user + "\"" \
                           ", \"object\": \"policies\"" \
                           ", \"action\": \"del\" " \
                           ", \"old\": \"" + old.strip() + "\"}"
@@ -196,7 +201,7 @@ def render_analytics():
         elif title == "Unsuccessful requests over time":
             choice = 3
         json_string = "{" \
-                      "\"subject\": \"user\"," \
+                      "\"subject\": \"" + user + "\"," \
                       "\"object\": \"analytics\"," \
                       "\"action\": \"request\" ," \
                       "\"type\": " + str(choice) + \
